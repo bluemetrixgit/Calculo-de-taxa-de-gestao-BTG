@@ -7,7 +7,7 @@ import re
 
 class CalculandoTaxadeGestao:
     def __init__(self):
-        self.planilha_de_controle = None
+        self.planilha_controle = None   # corrigido nome do atributo
         self.pl_data = []
 
     def load_control_file(self, uploaded_planilha_de_controle):
@@ -54,7 +54,12 @@ class CalculandoTaxadeGestao:
 
     def calculate_daily_fees(self):
         """Calculate daily management fees and pivot to daily columns."""
-        if self.planilha_controle is None or self.planilha_controle.empty or len(self.pl_data) == 0:
+        if (
+            self.planilha_controle is None
+            or not isinstance(self.planilha_controle, pd.DataFrame)
+            or self.planilha_controle.empty
+            or len(self.pl_data) == 0
+        ):
             st.error("Planilha de controle ou arquivos PL não carregados.")
             return None
 
